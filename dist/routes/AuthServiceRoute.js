@@ -15,7 +15,7 @@ router.get("/user/listToken/:id", verifyToken_1.default, authServiceProxy);
 router.post('/user/sigin', authServiceProxy);
 router.post('/user/sigup', authServiceProxy);
 router.post('/user/changepass', verifyToken_1.default, authServiceProxy);
-router.post('/user/active', verifyToken_1.default, authServiceProxy);
+router.post('/user/active', authServiceProxy);
 router.post('/', verifyToken_1.default, (req, res) => {
     console.log(req.cookies);
     res.send('jjd');
