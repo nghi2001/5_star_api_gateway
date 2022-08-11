@@ -11,11 +11,11 @@ const router = express_1.default.Router();
 const authServiceProxy = (0, express_http_proxy_1.default)(`${apiConfig_1.AuthApi}`);
 // console.log(AuthApi);
 // router.use(verifyToken)
-router.get("/auth/listToken/:id", verifyToken_1.default, authServiceProxy);
-router.post('/auth/sigin', authServiceProxy);
-router.post('/auth/sigup', authServiceProxy);
-router.post('/auth/changepass', verifyToken_1.default, authServiceProxy);
-router.post('/auth/active', verifyToken_1.default, authServiceProxy);
+router.get("/user/listToken/:id", verifyToken_1.default, authServiceProxy);
+router.post('/user/sigin', authServiceProxy);
+router.post('/user/sigup', authServiceProxy);
+router.post('/user/changepass', verifyToken_1.default, authServiceProxy);
+router.post('/user/active', verifyToken_1.default, authServiceProxy);
 router.post('/', verifyToken_1.default, (req, res) => {
     console.log(req.cookies);
     res.send('jjd');
