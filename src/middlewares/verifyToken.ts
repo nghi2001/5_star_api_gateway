@@ -22,11 +22,11 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
                                             user_id: decode._id
                                         }, )
                                 console.log(newToken.data);
-                                res.clearCookie('token');
-                                res.clearCookie("refresh_token");
-                                res.cookie('token',newToken.data.accessToken.toString(),{maxAge: 1000*60*60*24*30*30,httpOnly: true})
-                                res.cookie('refresh_token',newToken.data.refreshToken.toString(),{maxAge: 1000*60*60*24*30,httpOnly: true});
-                                
+                                if(!newToken.data) throw Error("invalid refresh Token")
+                                // res.clearCookie('token');
+                                // res.clearCookie("refresh_token");
+                                res.cookie('token',newToken.data.toString(),{maxAge: 1000*60*60*24*30*30,httpOnly: true})
+                                next()
                     } else {
                         status = 401; msg = 'Forbiden'
                     }
@@ -52,6 +52,8 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
         
     } catch (error) {
         console.log(error);
+        res.clearCookie('token');
+        res.clearCookie("refresh_token");
         return res.status(500).json({
             status:500,
             msg: error
