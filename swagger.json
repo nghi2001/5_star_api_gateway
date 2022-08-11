@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "5 Star Project Microservice",
+    "description": "My User Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4001",
+  "basePath": "",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Everything about your Pets",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "kjbbv",
+        "description": "kjdavbda",
+        "produces": [
+          "application/json"
+        ],
+        "response": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    } 
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"]
+}

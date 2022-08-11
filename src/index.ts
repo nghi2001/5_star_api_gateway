@@ -2,20 +2,30 @@ import Express from "express";
 import cors from 'cors';
 import dotenv from 'dotenv';
 import AuthRoute from './routes/AuthServiceRoute';
+import cookieParser from 'cookie-parser';
+import swaggerui from 'swagger-ui-express';
+const swaggerDocument = require('../swagger.json');
+
 const app = Express();
 
+app.use('/api-doc',
+    swaggerui.serve,
+    swaggerui.setup(swaggerDocument)
+)
+app.use(cookieParser())
 dotenv.config();
+const PORT = process.env.PORT ||4001
+app.use(cors(
+    {
+        origin: "http://localhost:3000",
+        credentials: true
+    }
+));
 
-app.use(cors());
+app.use('/api/auth/', AuthRoute);
 
-app.use('/api', AuthRoute);
 
-app.get("/", (req,res) => {
-    console.log('nguyen dnhg nghi');
-    res.json(process.env.PORT);
-})
-
-app.listen(process.env.PORT||3000, () => {
-    console.log(process.env.AUTH_SERVICE);
+app.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`);   
     
 })
