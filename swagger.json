@@ -14,10 +14,9 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "Everything about your Pets",
+      "description": "Xử lý phần authen",
       "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
+        "description": "Find out more"
       }
     }
   ],
