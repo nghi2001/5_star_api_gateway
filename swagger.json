@@ -10,7 +10,7 @@
     }
   },
   "host": "localhost:4001",
-  "basePath": "",
+  "basePath": "/api",
   "tags": [
     {
       "name": "Auth",
@@ -21,21 +21,400 @@
     }
   ],
   "paths": {
-    "/user": {
-      "get": {
+    "/auth/user/sigin": {
+      "post": {
         "tags": ["Auth"],
-        "summary": "kjbbv",
-        "description": "kjdavbda",
+        "summary": "Đăng nhập user",
+        "description": "",
         "produces": [
           "application/json"
         ],
-        "response": {
-          "200": {
-            "description": "Ok"
+        "parameters":[
+          {
+            "in": "body",
+            "name": "username",
+            "schema": {
+              "type": "string",
+              "example": "nghindps16371@fpt.edu.vn"
+            },
+            "required": true,
+            "description": "Tên đăng nhập của user"
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            },
+            "required": true,
+            "description": "Mật khẩu user"
+          },
+          {
+            "in": "body",
+            "name": "deviceName",
+            "schema": {
+              "type": "string",
+              "example": "opple"
+            },
+            "required": true,
+            "description": "dùng chuỗi bất kì để xác định tên thiết bị lúc ủe đăng nhập"
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":401
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "unauthorized"
+                }
+              }
+            }
+          },
+          "success": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":200
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Ok"
+                }
+              }
+            }
+          },
+          "missing param": {
+            "description": "Missing params",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "example":"400"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                }
+              }
+            }
+          }
+          
+          
         }
       }
-    } 
+    },
+    "/auth/user/changepass": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đổi mật khẩu user",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters":[
+          {
+            "in": "body",
+            "name": "username",
+            "schema": {
+              "type": "string",
+              "example": "nghindps16371@fpt.edu.vn"
+            },
+            "required": true,
+            "description": "Tên đăng nhập của user"
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            },
+            "required": true,
+            "description": "Mật khẩu user"
+          },
+          {
+            "in": "body",
+            "name": "newpass",
+            "schema": {
+              "type": "string",
+              "example": "1234567"
+            },
+            "required": true,
+            "description": "Mật khẩu user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sai mật khẩu Hoặc new pass trùng old pass",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":401
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Error"
+                }
+              }
+            }
+          },
+          "success": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":200
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Ok"
+                }
+              }
+            }
+          },
+          "missing param": {
+            "description": "Missing params",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "example":"400"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                }
+              }
+            }
+          }
+          
+          
+        }
+      }
+    },
+    "/auth/user/sigup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Đăng ký user",
+        "description": " Đăng ký user sau khi đăng ký thành công phải vào mail để lấy code vài active account nếu ko account sẽ bị xóa sau vài phút !!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters":[
+          {
+            "in": "body",
+            "name": "username",
+            "schema": {
+              "type": "string",
+              "example": "nghi123"
+            },
+            "required": true,
+            "description": "Tên đăng nhập của user"
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            },
+            "required": true,
+            "description": "Mật khẩu user"
+          },
+          {
+            "in": "body",
+            "name": "email",
+            "schema": {
+              "type": "string",
+              "example": "nghi@gmail.com"
+            },
+            "required": true,
+            "description": "email"
+          },
+          {
+            "in": "body",
+            "name": "name",
+            "schema": {
+              "type": "string",
+              "example": "abc"
+            },
+            "required": true,
+            "description": "fullname"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "username đã tồn tại",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":200
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "username đã tồn tại"
+                }
+              }
+            }
+          },
+          "success": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":200
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Ok"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing params",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statusCode": {
+                  "type": "integer",
+                  "example":"400"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Validation Failed"
+                }
+              }
+            }
+          }
+          
+          
+        }
+      }
+    },
+    "/auth/user/active": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Kích hoạt tài khoản user",
+        "description": "dùng code lấy được từ email đẻ kích hoạt tài khoản !!",
+        "produces": [
+          "application/json"
+        ],
+        "parameters":[
+          {
+            "in": "body",
+            "name": "_id",
+            "schema": {
+              "type": "string",
+              "example": "62f5a14698a2bdf0248889cd"
+            },
+            "required": true,
+            "description": "_id của user"
+          },
+          {
+            "in": "body",
+            "name": "code",
+            "schema": {
+              "type": "string",
+              "example": "62f5a14698a2bdf0248889cd"
+            },
+            "required": true,
+            "description": "Mã kích hoạt "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":200
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Ok"
+                }
+              }
+            }
+          },
+          "fail": {
+            "description": "Ok",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":500
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Sai Code"
+                }
+              }
+            }
+          }
+          
+          
+        }
+      }
+    },
+    "/auth/user/listToken/{iduser}": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Lấy List Token User đang đăng nhập",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+            
+          },
+          "fail": {
+            "description": "[]",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example":500
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Sai Code"
+                }
+              }
+            }
+          }
+          
+          
+        }
+      }
+    }
   },
   "schemes": ["http"],
   "consumes": ["application/json"],
