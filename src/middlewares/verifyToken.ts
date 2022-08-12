@@ -7,6 +7,8 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
     try {
         let status , msg;
         let token = req.cookies.token;
+        let user;
+        // req.headers.user = "nghi nguyeexn"
         if(token) {
             await jwt.verify(token,process.env.ACCESS_TOKEN_SECRET as Secret,async (err:any,decode:any) => {
                 if(err) {
@@ -17,11 +19,13 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
                             let decode = (await jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET as Secret) as any)
                             console.log('decode',decode);
                             
-                            let newToken:any = await  axios.post(`${process.env.AUTH_SERVICE}auth/resetToken`,{
+                            let newToken:any = await  axios.post(`${process.env.AUTH_SERVICE}user/resetToken`,{
                                             refresh_token: refresh_token,
                                             user_id: decode._id
                                         }, )
                                 console.log(newToken.data);
+                                user = await jwt.verify(newToken.data,process.env.ACCESS_TOKEN_SECRET as Secret)
+                                req.headers.user = JSON.stringify(user)
                                 if(!newToken.data) throw Error("invalid refresh Token")
                                 // res.clearCookie('token');
                                 // res.clearCookie("refresh_token");
@@ -31,6 +35,7 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
                         status = 401; msg = 'Forbiden'
                     }
                 } else {
+                    user = decode
                     status = 200;
                 }
             })
@@ -47,13 +52,14 @@ export default async function verifyToken (req:Request,res:Response,next:NextFun
                 msg
             })
         } else {
+            req.headers.user = JSON.stringify(user)
             return next()
         }
         
     } catch (error) {
         console.log(error);
-        res.clearCookie('token');
-        res.clearCookie("refresh_token");
+        // res.clearCookie('token');
+        // res.clearCookie("refresh_token");
         return res.status(500).json({
             status:500,
             msg: error

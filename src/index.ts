@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import AuthRoute from './routes/AuthServiceRoute';
 import cookieParser from 'cookie-parser';
 import swaggerui from 'swagger-ui-express';
+import PostRoute from './routes/PostServiceRoute'
 const swaggerDocument = require('../swagger.json');
 
 const app = Express();
@@ -24,7 +25,7 @@ app.use(cors(
 
 app.use('/api/auth/', AuthRoute);
 
-
+app.use('/api/', PostRoute);
 app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);   
     
